@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/smashwilson/create-fixture-repository/issues"
   },
-  "homepage": "https://github.com/smashwilson/create-fixture-repository#readme"
+  "homepage": "https://github.com/smashwilson/create-fixture-repository#readme",
+  "dependencies": {
+    "@types/fs-extra": "8.0.0",
+    "fs-extra": "8.1.0"
+  },
+  "devDependencies": {
+    "typescript": "3.5.3"
+  }
 }
