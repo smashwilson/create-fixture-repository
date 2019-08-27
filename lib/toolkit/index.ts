@@ -11,7 +11,7 @@ export function loadFromFixture(name: string): ActionSequence {
     try {
       const fn = require(path.relative(__dirname, attempt)).default;
       fn(repository);
-      return repository.getActionSequence();
+      return repository.finalize();
     } catch (e) {
       if (!/^Cannot find module /.test(e.message)) {
         throw e;

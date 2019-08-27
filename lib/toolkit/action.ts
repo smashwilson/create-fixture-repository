@@ -8,6 +8,26 @@ abstract class Action {
   abstract enact(context: Context): Promise<void>;
 }
 
+export class InitializeAction extends Action {
+  constructor(
+    private readonly remoteName: string,
+    private readonly repoName: string
+  ) {
+    super();
+  }
+
+  async enact() {
+    await fs.emptyDir(".");
+    await git("init");
+    await git(
+      "remote",
+      "add",
+      this.remoteName,
+      `git@github.com:${this.repoName}.git`
+    );
+  }
+}
+
 export class BranchAction extends Action {
   constructor(private readonly name: string) {
     super();
