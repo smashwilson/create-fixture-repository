@@ -10,6 +10,7 @@ import {
   MergeAction,
   IPushOptions,
   PushAction,
+  ReportAction,
 } from "./action";
 
 export class Repository {
@@ -21,6 +22,7 @@ export class Repository {
   }
 
   finalize(): ActionSequence {
+    this.actionSequence.add(new ReportAction());
     return this.actionSequence;
   }
 

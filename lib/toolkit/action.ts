@@ -133,6 +133,24 @@ export class PushAction extends Action {
   }
 }
 
+export class ReportAction extends Action {
+  async enact() {
+    const structure = await git(
+      "-c",
+      "color.ui=always",
+      "log",
+      "--color",
+      "--oneline",
+      "--graph",
+      "--decorate",
+      "--all"
+    );
+    console.log(structure.stdout);
+    const remotes = await git("-c", "color.ui=always", "remote", "-v");
+    console.log(remotes.stdout);
+  }
+}
+
 export class ActionSequence extends Action {
   private actions: Action[];
 
