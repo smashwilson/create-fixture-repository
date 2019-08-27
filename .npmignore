@@ -1,1 +1,4 @@
 lib/*
+build/incremental
+.prettierrc.json
+tsconfig.json
