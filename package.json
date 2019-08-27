@@ -1,0 +1,23 @@
+{
+  "name": "@smashwilson/create-fixture-repository",
+  "version": "1.0.0",
+  "description": "Create git repositories in known states",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smashwilson/create-fixture-repository.git"
+  },
+  "keywords": [
+    "git",
+    "fixture"
+  ],
+  "author": "Ash Wilson <smashwilson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smashwilson/create-fixture-repository/issues"
+  },
+  "homepage": "https://github.com/smashwilson/create-fixture-repository#readme"
+}
