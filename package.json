@@ -28,9 +28,11 @@
   "dependencies": {
     "@types/chalk": "2.2.0",
     "@types/fs-extra": "8.0.0",
+    "@types/lorem-ipsum": "1.0.2",
     "@types/yargs": "13.0.2",
     "chalk": "2.4.2",
     "fs-extra": "8.1.0",
+    "lorem-ipsum": "2.0.3",
     "yargs": "14.0.0"
   },
   "devDependencies": {
