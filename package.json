@@ -4,8 +4,10 @@
   "description": "Create git repositories in known states",
   "main": "lib/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": "build/bin.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smashwilson/create-fixture-repository.git"

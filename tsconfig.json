@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES2019",
+    "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./build/",
+    "rootDir": "./lib/",
+    "composite": true,
+    "tsBuildInfoFile": "./build/incremental",
+    "removeComments": true,
+
+    "strict": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "preserveSymlinks": true,
+    "allowUmdGlobalAccess": true
+  }
+}
