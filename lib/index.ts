@@ -1,6 +1,7 @@
 import yargs from "yargs";
 
 import {loadFromFixture} from "./toolkit";
+import {log} from "./toolkit/log";
 
 export async function main() {
   const args = yargs
@@ -10,8 +11,21 @@ export async function main() {
       description: "Name or path of the fixture function module to use",
       demandOption: true,
     })
+    .option("verbose", {
+      alias: "v",
+      boolean: true,
+      description: "Emit more detailed logging information",
+      default: false,
+    })
     .parse(process.argv.slice(2));
 
+  if (args.verbose) {
+    log.setLevel("verbose");
+  }
+
+  log.debug("Loading fixture.", {fixture: args.fixture});
   const actions = loadFromFixture(args.fixture);
+
+  log.debug("Recreating fixture state.");
   await actions.play();
 }
