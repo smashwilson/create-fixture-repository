@@ -9,6 +9,11 @@ export default function(repo: Repository) {
     repo.branch("other", () => {
       repo.times(3, () => repo.commit());
     });
+    repo.branch("third", () => {
+      repo.times(2, () => repo.commit());
+      repo.merge("other");
+      repo.times(2, () => repo.commit());
+    });
     repo.times(2, () => repo.commit());
   });
 
