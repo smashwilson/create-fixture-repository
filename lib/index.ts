@@ -11,6 +11,11 @@ export async function main() {
       description: "Name or path of the fixture function module to use",
       demandOption: true,
     })
+    .option("remote", {
+      alias: "r",
+      string: true,
+      description: "Remote URL to push to",
+    })
     .option("verbose", {
       alias: "v",
       boolean: true,
@@ -24,7 +29,9 @@ export async function main() {
   }
 
   log.debug("Loading fixture.", {fixture: args.fixture});
-  const actions = loadFromFixture(args.fixture);
+  const actions = loadFromFixture(args.fixture, {
+    remoteURL: args.remote,
+  });
 
   log.debug("Recreating fixture state.");
   await actions.play();

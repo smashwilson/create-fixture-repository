@@ -1,9 +1,13 @@
 import path from "path";
 
+import {log} from "./log";
 import {Repository} from "./api";
-import {Fixture} from "./fixture";
+import {Fixture, IFixtureOptions} from "./fixture";
 
-export function loadFromFixture(name: string): Fixture {
+export function loadFromFixture(
+  name: string,
+  options: IFixtureOptions
+): Fixture {
   const repository = new Repository();
 
   const attempts = [name, path.resolve(__dirname, "../fixtures", name)];
@@ -11,7 +15,9 @@ export function loadFromFixture(name: string): Fixture {
     try {
       const fn = require(path.relative(__dirname, attempt)).default;
       fn(repository);
-      return new Fixture(repository.finalize());
+
+      log.debug("Fixture loaded.", {fixturePath: attempt});
+      return new Fixture(repository.finalize(), options);
     } catch (e) {
       if (!/^Cannot find module /.test(e.message)) {
         throw e;

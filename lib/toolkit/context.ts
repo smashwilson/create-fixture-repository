@@ -1,11 +1,13 @@
 export class Context {
+  public currentRemote: string;
   public currentBranch: string;
   public madeChanges: boolean;
   public branchPushed: boolean;
 
   private counter: number;
 
-  constructor() {
+  constructor(public remoteURL: string | undefined) {
+    this.currentRemote = "origin";
     this.currentBranch = "master";
     this.madeChanges = false;
     this.branchPushed = false;
