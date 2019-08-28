@@ -2,6 +2,7 @@ import {loremIpsum} from "lorem-ipsum";
 import fs from "fs-extra";
 
 import {git} from "./git";
+import {log} from "./log";
 import {Context} from "./context";
 
 abstract class Action {
@@ -14,6 +15,7 @@ export class BranchAction extends Action {
   }
 
   async enact(context: Context) {
+    log.debug("Creating a new branch.", {branch: this.name});
     await git("checkout", "-b", this.name);
     context.currentBranch = this.name;
   }
@@ -25,6 +27,7 @@ export class CheckoutAction extends Action {
   }
 
   async enact(context: Context) {
+    log.debug("Checking out an existing branch.", {branch: this.name});
     await git("checkout", this.name);
     context.currentBranch = this.name;
   }
@@ -59,6 +62,7 @@ export class CommitAction extends Action {
       await git("add", fileName);
       context.madeChanges = true;
     }
+    log.debug("Making a commit.");
 
     const args = ["commit"];
     if (this.options.empty && !context.madeChanges) {
@@ -77,7 +81,11 @@ export class MergeAction extends Action {
     super();
   }
 
-  async enact() {
+  async enact(context: Context) {
+    log.debug("Merging in another branch.", {
+      base: context.currentBranch,
+      head: this.name,
+    });
     await git("merge", this.name);
   }
 }
@@ -104,8 +112,11 @@ export class PushAction extends Action {
 
   async enact(context: Context) {
     if (!context.remoteURL) {
+      log.warn("Skipping push because --remote was not specified.");
       return;
     }
+
+    log.debug("Pushing branch.", {branch: context.currentBranch});
 
     const args = ["push"];
     if (this.options.force) {
