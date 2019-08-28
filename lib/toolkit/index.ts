@@ -1,9 +1,9 @@
 import path from "path";
 
-import {ActionSequence} from "./action";
 import {Repository} from "./api";
+import {Fixture} from "./fixture";
 
-export function loadFromFixture(name: string): ActionSequence {
+export function loadFromFixture(name: string): Fixture {
   const repository = new Repository();
 
   const attempts = [name, path.resolve(__dirname, "../fixtures", name)];
@@ -11,7 +11,7 @@ export function loadFromFixture(name: string): ActionSequence {
     try {
       const fn = require(path.relative(__dirname, attempt)).default;
       fn(repository);
-      return repository.finalize();
+      return new Fixture(repository.finalize());
     } catch (e) {
       if (!/^Cannot find module /.test(e.message)) {
         throw e;
