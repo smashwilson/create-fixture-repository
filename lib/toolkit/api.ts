@@ -2,7 +2,6 @@
 
 import {
   ActionSequence,
-  InitializeAction,
   CommitAction,
   ICommitOptions,
   BranchAction,
@@ -22,15 +21,6 @@ export class Repository {
 
   finalize(): ActionSequence {
     return this.actionSequence;
-  }
-
-  remoteRepo(remoteName: string, repoName: string): this {
-    this.actionSequence.add(new InitializeAction(remoteName, repoName));
-    return this;
-  }
-
-  repo(repoName: string): this {
-    return this.remoteRepo("origin", repoName);
   }
 
   times(count: number, block: (i: number) => {}): this {
