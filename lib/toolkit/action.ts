@@ -93,6 +93,7 @@ export class MergeAction extends Action {
 interface IFullPushOptions {
   remoteName: string;
   force: boolean;
+  setUpstream: boolean;
 }
 
 export type IPushOptions = Partial<IFullPushOptions>;
@@ -106,6 +107,7 @@ export class PushAction extends Action {
     this.options = {
       remoteName: "origin",
       force: true,
+      setUpstream: true,
       ...options,
     };
   }
@@ -121,6 +123,9 @@ export class PushAction extends Action {
     const args = ["push"];
     if (this.options.force) {
       args.push("--force");
+    }
+    if (this.options.setUpstream) {
+      args.push("--set-upstream");
     }
     args.push(this.options.remoteName);
     args.push(`${context.currentBranch}:${context.currentBranch}`);
