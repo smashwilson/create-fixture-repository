@@ -14,4 +14,5 @@ export default function(repo: Repository) {
 
   repo.commit({message: "Fixed commit message here"});
   repo.times(4, () => repo.commit());
+  repo.push();
 }
