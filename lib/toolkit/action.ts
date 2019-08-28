@@ -103,6 +103,10 @@ export class PushAction extends Action {
   }
 
   async enact(context: Context) {
+    if (!context.remoteURL) {
+      return;
+    }
+
     const args = ["push"];
     if (this.options.force) {
       args.push("--force");

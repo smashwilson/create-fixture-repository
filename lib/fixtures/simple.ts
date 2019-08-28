@@ -5,6 +5,11 @@ export default function(repo: Repository) {
 
   repo.branch("something", () => {
     repo.times(2, () => repo.commit());
+    repo.push();
+    repo.branch("other", () => {
+      repo.times(3, () => repo.commit());
+    });
+    repo.times(2, () => repo.commit());
   });
 
   repo.commit({message: "Fixed commit message here"});
