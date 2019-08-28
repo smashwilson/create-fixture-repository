@@ -18,11 +18,15 @@ npx @smashwilson/create-fixture-repository --help
 
 ## Use
 
-Invoke `create-fixture-repository` in a directory to wipe any existing contents and replace it with a git repository of the chosen commit graph topology. :warning: `create-fixture-repository` will delete anything in the current working directory, so don't run it in a directory you care about. :warning:
+Invoke `create-fixture-repository` in a directory to wipe any existing contents and replace it with a git repository of the chosen commit graph topology.
+
+:warning: `create-fixture-repository` will delete anything in the current working directory, so don't run it in a directory you care about. :warning:
 
 Identify a repository template with `--fixture`. Choose from [the included ones](https://github.com/smashwilson/create-fixture-repository/tree/master/lib/fixtures) by name, or write your own in a standalone `.js` file and specify its full path. See `lib/fixtures/demo.ts` for an example that exercises the specification API.
 
-If your fixture template uses `.push()`, specify the target remote with `--remote`. :warning: Be aware that `create-fixture-repository` will nuke any existing branches or data, so don't point it at anything you care about. :warning:
+If your fixture template uses `.push()`, specify the target remote with `--remote`.
+
+:warning: Be aware that `create-fixture-repository` will nuke any existing branches or data, so don't point it at anything you care about. :warning:
 
 Use `--verbose` to see more detailed logs about the way that your repository is constructed.
 
