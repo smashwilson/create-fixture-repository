@@ -1,12 +1,114 @@
 import {loremIpsum} from "lorem-ipsum";
 import fs from "fs-extra";
+import path from "path";
 
 import {git} from "./git";
 import {log} from "./log";
 import {Context} from "./context";
+import {FileCreator, FileModifier} from "./files";
 
 abstract class Action {
   abstract enact(context: Context): Promise<void>;
+}
+
+interface IFullFileCreateOptions {
+  relativePath: string | null;
+  autoStage: boolean;
+}
+
+export type IFileGenerator = (f: FileCreator) => any;
+
+export type IFileCreateOptions = Partial<IFullFileCreateOptions>;
+
+export class FileCreateAction extends Action {
+  private readonly options: IFullFileCreateOptions;
+  private readonly generator: IFileGenerator;
+
+  constructor(options: IFileCreateOptions, generator: IFileGenerator) {
+    super();
+    this.options = {
+      relativePath: null,
+      autoStage: true,
+      ...options,
+    };
+    this.generator = generator;
+  }
+
+  async enact(context: Context) {
+    const relativePath = this.options.relativePath || context.fileName();
+    if (path.isAbsolute(relativePath)) {
+      throw new Error(`Expected relative path but got ${relativePath}`);
+    }
+    log.debug("Creating file.", {path: relativePath});
+
+    const fullPath = path.resolve(relativePath);
+
+    await fs.mkdirs(path.dirname(fullPath));
+
+    const creator = new FileCreator();
+    this.generator(creator);
+    await fs.writeFile(fullPath, creator.getContent(), {
+      encoding: "utf8",
+      flag: "wx",
+    });
+
+    if (this.options.autoStage) {
+      await git("add", relativePath);
+    }
+    context.madeChanges = true;
+  }
+}
+
+interface IFullFileModifyOptions {
+  relativePath: string;
+  autoStage: boolean;
+}
+
+export interface IFileModifyOptions {
+  relativePath: string;
+  autoStage?: boolean;
+}
+
+export type IFileModifier = (f: FileModifier) => any;
+
+export class FileModifyAction extends Action {
+  private readonly options: IFullFileModifyOptions;
+  private readonly modifier: IFileModifier;
+
+  constructor(options: IFileModifyOptions, modifier: IFileModifier) {
+    super();
+    this.options = {
+      autoStage: true,
+      ...options,
+    };
+    this.modifier = modifier;
+  }
+
+  async enact(context: Context) {
+    if (path.isAbsolute(this.options.relativePath)) {
+      throw new Error(
+        `Expected relative path but got ${this.options.relativePath}`
+      );
+    }
+    log.debug("Modifying file.", {path: this.options.relativePath});
+
+    const fullPath = path.resolve(this.options.relativePath);
+    const original = await fs.readFile(fullPath, {
+      encoding: "utf8",
+      flag: "r",
+    });
+    const modifier = new FileModifier(original);
+    this.modifier(modifier);
+    await fs.writeFile(fullPath, modifier.getContent(), {
+      encoding: "utf8",
+      flag: "w",
+    });
+
+    if (this.options.autoStage) {
+      await git("add", this.options.relativePath);
+    }
+    context.madeChanges = true;
+  }
 }
 
 export class BranchAction extends Action {
