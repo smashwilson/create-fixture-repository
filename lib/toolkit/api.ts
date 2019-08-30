@@ -2,6 +2,12 @@
 
 import {
   ActionSequence,
+  IFileCreateOptions,
+  IFileGenerator,
+  FileCreateAction,
+  IFileModifyOptions,
+  IFileModifier,
+  FileModifyAction,
   CommitAction,
   ICommitOptions,
   BranchAction,
@@ -27,6 +33,28 @@ export class Repository {
     for (let i = 0; i < count; i++) {
       block(i);
     }
+    return this;
+  }
+
+  createFile(
+    relativePath: string,
+    options: IFileCreateOptions = {},
+    callback: IFileGenerator = () => {}
+  ): this {
+    this.actionSequence.add(
+      new FileCreateAction({relativePath, ...options}, callback)
+    );
+    return this;
+  }
+
+  changeFile(
+    relativePath: string,
+    options: Omit<IFileModifyOptions, "relativePath">,
+    callback: IFileModifier = () => {}
+  ): this {
+    this.actionSequence.add(
+      new FileModifyAction({relativePath, ...options}, callback)
+    );
     return this;
   }
 
