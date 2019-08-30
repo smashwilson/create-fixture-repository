@@ -8,6 +8,7 @@
     "sourceMap": true,
     "outDir": "./build/",
     "rootDir": "./lib/",
+    "lib": ["ES2018"],
     "composite": true,
     "tsBuildInfoFile": "./build/incremental",
     "removeComments": true,
