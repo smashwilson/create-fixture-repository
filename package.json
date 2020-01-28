@@ -30,7 +30,7 @@
     "@types/chalk": "2.2.0",
     "@types/fs-extra": "8.0.1",
     "@types/lorem-ipsum": "2.0.0",
-    "@types/yargs": "15.0.1",
+    "@types/yargs": "15.0.2",
     "chalk": "3.0.0",
     "fs-extra": "8.1.0",
     "lorem-ipsum": "2.0.3",
