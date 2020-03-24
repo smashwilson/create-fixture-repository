@@ -5,7 +5,7 @@ import {main} from "./index";
 import {log} from "./toolkit/log";
 import {isGitError} from "./toolkit/git";
 
-main().catch(err => {
+main().catch((err) => {
   const payload: any = {stack: err.stack};
   if (isGitError(err)) {
     if (err.code !== null) {
