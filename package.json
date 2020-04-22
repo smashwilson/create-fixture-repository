@@ -37,7 +37,7 @@
     "yargs": "15.3.1"
   },
   "devDependencies": {
-    "prettier": "2.0.4",
+    "prettier": "2.0.5",
     "typescript": "3.8.3"
   }
 }
