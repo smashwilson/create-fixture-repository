@@ -34,7 +34,7 @@
     "chalk": "4.1.0",
     "fs-extra": "9.0.1",
     "lorem-ipsum": "2.0.3",
-    "yargs": "15.4.1"
+    "yargs": "16.0.3"
   },
   "devDependencies": {
     "prettier": "2.1.1",
