@@ -28,7 +28,7 @@
   "homepage": "https://github.com/smashwilson/create-fixture-repository#readme",
   "dependencies": {
     "@types/chalk": "2.2.0",
-    "@types/fs-extra": "9.0.8",
+    "@types/fs-extra": "9.0.9",
     "@types/lorem-ipsum": "2.0.0",
     "@types/yargs": "16.0.0",
     "chalk": "4.1.0",
